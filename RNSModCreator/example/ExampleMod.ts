@@ -1,5 +1,6 @@
 import { bp, Element } from "../src/BasePattern.js";
 import Color from "../src/Color.js";
+import { condDifficultyCheck, condPlayerCount } from "../src/Condition.js";
 import Encounter from "../src/Encounter.js";
 import Enemy from "../src/Enemy.js";
 import FightMod from "../src/FightMod.js";
@@ -38,11 +39,22 @@ const mod = new FightMod(() => {
         });
 
         timeRepeatingTimes(4000, 1000, 6, () => {
-            bp.cleave({
-                orderBin: [1, 1 << 1, 1 << 2, 1 << 3],
-                rot: [0, 90, 180, 270],
-                warningDelay: 1000,
-                spawnDelay: 3000
+            condPlayerCount({ twoPlayer: true, threePlayer: true, fourPlayer: true }, () => {
+                bp.cleave({
+                    orderBin: [1, 1 << 1, 1 << 2, 1 << 3],
+                    rot: [0, 90, 180, 270],
+                    warningDelay: 1000,
+                    spawnDelay: 3000
+                });
+                condDifficultyCheck({ lunar: true }, () => {
+                    bp.cleaveFixed({ posX: [500], posY: [500], numPoints: 1 });
+                });
+
+                bp.circleSpreads({trgBinary: 0b11, radius: 100});
+            });
+
+            condPlayerCount({ singlePlayer: true }, () => {
+                bp.bulletEnlarge({posX: [100], posY: [200], numPoints: 1});
             });
             bp.colormatch({
                 x: 300,

@@ -1,3 +1,4 @@
+import type { Condition } from "./Condition.js";
 import _CONTEXT from "./InternalContext.js";
 
 type TimeBlockType = "time" | "timeRepeating" | "timeRepeatTimes" | "timeRepeatingMult"
@@ -7,11 +8,15 @@ class TimeBlock {
     contents: string[];
     args: number[];
 
+    needsRefreshedBlock: boolean;
+    blockHeader: string[];
+
     constructor(type: TimeBlockType, args: number[], callback: () => void) {
         this.type = type;
-        this.contents = [];
         this.args = args;
-
+        this.needsRefreshedBlock = false;
+        this.blockHeader = [`${this.type},${this.args.join(",")}`];
+        this.contents = [...this.blockHeader];
 
         if (_CONTEXT.pattern === null) {
             throw new Error("Time function used outside of pattern");
@@ -29,12 +34,29 @@ class TimeBlock {
     }
 
     addContent(toAdd: string) {
+        if (this.needsRefreshedBlock) {
+            this.needsRefreshedBlock = false;
+            this.contents.push(this.blockHeader.join("\n"));
+        }
         this.contents.push(toAdd);
     }
 
+    addCondition(cond: Condition) {
+        this.blockHeader.push(cond.toString());
+
+        if (!this.needsRefreshedBlock) {
+            this.contents.push(cond.toString());
+        }
+    }
+
+    endCondition() {
+        this.needsRefreshedBlock = true;
+        this.blockHeader.pop();
+    }
+
+
     toString() {
-        return `${this.type},${this.args.join(",")}\n` + 
-            this.contents.join("\n");
+        return this.contents.join("\n");
     };
 }
 
