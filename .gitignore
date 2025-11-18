@@ -32,6 +32,7 @@ bld/
 [Oo]ut/
 [Ll]og/
 [Ll]ogs/
+build/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -40,6 +41,11 @@ bld/
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/
+*.d.ts
+*.js
+*.map
+*.tsbuildinfo
+
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
