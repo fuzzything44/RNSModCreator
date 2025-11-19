@@ -1,28 +1,7 @@
+import { Command } from "./Command.js";
+import Expression from "./Expression.js";
 import _CONTEXT from "./InternalContext.js";
-import type Variable from "./Variable.js";
-
-type ConditionType = "condPlayerCount" | "condDifficultyCheck" | "condVarCheck" | "condHpThreshold";
-
-class Condition {
-    type: ConditionType;
-    args: string[];
-
-    constructor(type: ConditionType, args: string[], callback: () => void) {
-        this.type = type;
-        this.args = args;
-        if (_CONTEXT.timeBlock === null) {
-            throw new Error("Condition function used outside of time block");
-        }
-
-        _CONTEXT.timeBlock.addCondition(this);
-        callback();
-        _CONTEXT.timeBlock.endCondition();
-    }
-
-    toString() {
-        return `${this.type},${this.args.join(",")}`;
-    };
-}
+import type { Value } from "./PatternVars.js";
 
 interface PlayerCount {
     singlePlayer?: boolean;
@@ -31,7 +10,7 @@ interface PlayerCount {
     fourPlayer?: boolean;
 }
 /** Decides whether to continue running the current time block based on player count */
-const condPlayerCount = (playerCounts: PlayerCount, callback: () => void) => new Condition("condPlayerCount", [playerCounts.singlePlayer ? "true" : "false", playerCounts.twoPlayer ? "true" : "false", playerCounts.threePlayer ? "true" : "false", playerCounts.fourPlayer ? "true" : "false"], callback);
+const condPlayerCount = (playerCounts: PlayerCount, callback: () => void) => new Command("condPlayerCount", [playerCounts.singlePlayer ? 1 : 0, playerCounts.twoPlayer ? 1 : 0, playerCounts.threePlayer ? 1 : 0, playerCounts.fourPlayer ? 1 : 0], callback);
 
 interface Difficulty {
     normal?: boolean;
@@ -39,15 +18,15 @@ interface Difficulty {
     lunar?: boolean;
 }
 /** Decides whether to continue running the current time block based on the current difficulty setting. Cute/normal are the same */
-const condDifficultyCheck = (diff: Difficulty, callback: () => void) => new Condition("condDifficultyCheck", [diff.normal ? "true" : "false", diff.hard ? "true" : "false", diff.lunar ? "true" : "false"], callback);
+const condDifficultyCheck = (diff: Difficulty, callback: () => void) => new Command("condDifficultyCheck", [diff.normal ? 1 : 0, diff.hard ? 1 : 0, diff.lunar ? 1 : 0], callback);
 
 type VarCompare = "==" | "!=" | ">" | "<" | ">=" | "<=";
 /** Decides whether to continue running the current time block based on variable comparison */
-const condVarCheck = (var1: Variable, comparison: VarCompare, var2: Variable, callback: () => void) => new Condition("condVarCheck", [var1.toString(), comparison, var2.toString()], callback);
+const condVarCheck = (var1: Value, comparison: VarCompare, var2: Value, callback: () => void) => new Command("condVarCheck", [var1, new Expression(comparison), var2], callback);
 
 /** Decides whether to continue running the current time block based on enemy's HP (will continue if enemy HP is less than given percentage)
  * This is a percentage from 0-100 (DIFFERS from modding API)
  * */
-const condHpThreshold = (hpPercent: number, callback: () => void) => new Condition("condHpThreshold", [(hpPercent / 100).toString()], callback);
+const condHpThreshold = (hpPercent: number, callback: () => void) => new Command("condHpThreshold", [hpPercent / 100], callback);
 
-export { Condition, condPlayerCount, condDifficultyCheck, condVarCheck, condHpThreshold };
+export { condPlayerCount, condDifficultyCheck, condVarCheck, condHpThreshold };

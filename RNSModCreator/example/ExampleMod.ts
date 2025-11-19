@@ -3,9 +3,11 @@ import Color from "../src/Color.js";
 import { condDifficultyCheck, condPlayerCount } from "../src/Condition.js";
 import Encounter from "../src/Encounter.js";
 import Enemy from "../src/Enemy.js";
+import { intRandom } from "../src/Expression.js";
 import FightMod from "../src/FightMod.js";
 import Pattern from "../src/Pattern.js";
 import { time, timeRepeating, timeRepeatingTimes } from "../src/Time.js";
+import { setVar } from "../src/Variable.js";
 
 const mod = new FightMod(() => {
     const testEnemy = new Enemy({
@@ -24,10 +26,13 @@ const mod = new FightMod(() => {
             });
         });
         timeRepeating(1000, 5000, () => {
-            bp.bulletEnlarge({
-                numPoints: 3,
-                posX: [0, 5, 10],
-                posY: [69, 420, 0]
+            const bulletAmount = setVar(intRandom(5).add(5).multiply(2));
+            bp.dark2Line({
+                num: bulletAmount,
+                x: 400,
+                y: 300,
+                lineLength: 600,
+                angle: 60
             })
         });
     });
@@ -60,7 +65,7 @@ const mod = new FightMod(() => {
                 x: 300,
                 y: 400,
                 element: Element.Blue
-            })
+            });
         });
     });
 

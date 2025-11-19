@@ -1,4 +1,4 @@
-import type { Condition } from "./Condition.js";
+import type { Command } from "./Command.js";
 import _CONTEXT from "./InternalContext.js";
 
 type TimeBlockType = "time" | "timeRepeating" | "timeRepeatTimes" | "timeRepeatingMult"
@@ -41,7 +41,7 @@ class TimeBlock {
         this.contents.push(toAdd);
     }
 
-    addCondition(cond: Condition) {
+    addContext(cond: Command) {
         this.blockHeader.push(cond.toString());
 
         if (!this.needsRefreshedBlock) {
@@ -49,7 +49,7 @@ class TimeBlock {
         }
     }
 
-    endCondition() {
+    endContext() {
         this.needsRefreshedBlock = true;
         this.blockHeader.pop();
     }

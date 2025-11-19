@@ -1,5 +1,5 @@
 import _CONTEXT from "./InternalContext.js";
-import type { PatternVars } from "./PatternVars.js";
+import type { PatternVars, Value } from "./PatternVars.js";
 
 enum Element {
     Purple = 2,
@@ -19,7 +19,7 @@ const addBasePattern = (patName: string, patArgs: PatternVars) => {
     } else {
         const content =
             `pattVars,` + Object.keys(patArgs).map(key => {
-                const value: number | number[] | undefined = patArgs[key as keyof PatternVars];
+                const value: Value | Value[] | undefined = patArgs[key as keyof PatternVars];
                 // Some values are sent in as arrays, we need to handle that
                 if (Array.isArray(value)) {
                     // t_xpos and t_ypos have no _, everything else does

@@ -1,138 +1,142 @@
 import type { Element } from "./BasePattern.js";
+import type Expression from "./Expression.js";
+import type { Variable } from "./Variable.js";
 
 const POS_MIN = -10000;
 const POS_MAX = 10000;
 
+type Value = number | Variable | Expression;
+
 interface _PatternVars {
-    x: number;
-    y: number;
+    x: Value;
+    y: Value;
 
-    fx: number;
-    fy: number;
+    fx: Value;
+    fy: Value;
 
-    number: number;
-    delay: number;
-    delay2: number;
-    radius: number;
-    stat: number;
-    rand: number;
-    duration: number;
+    number: Value;
+    delay: Value;
+    delay2: Value;
+    radius: Value;
+    stat: Value;
+    rand: Value;
+    duration: Value;
 
-    pointMult: number;
-    timeMult: number;
+    pointMult: Value;
+    timeMult: Value;
 
-    rot: number | number[];
-    dir: number;
-    fdir: number;
-    frot: number;
-    angle: number;
-    spd: number | number[];
-    mult: number;
-    oAngle: number;
-    speedMult: number;
-    moveSpeed: number;
-    speedDuration: number;
-    spdDur: number;
-    amount: number;
-    minimum: number;
-    maximum: number;
-    minAmount: number;
-    maxAmount: number;
-    hbsColorInd: number;
-    doubled: number;
-    extraHit: number;
-    playSound: number;
+    rot: Value | Value[];
+    dir: Value;
+    fdir: Value;
+    frot: Value;
+    angle: Value;
+    spd: Value | Value[];
+    mult: Value;
+    oAngle: Value;
+    speedMult: Value;
+    moveSpeed: Value;
+    speedDuration: Value;
+    spdDur: Value;
+    amount: Value;
+    minimum: Value;
+    maximum: Value;
+    minAmount: Value;
+    maxAmount: Value;
+    hbsColorInd: Value;
+    doubled: Value;
+    extraHit: Value;
+    playSound: Value;
     
-    time: number;
-    timeBetween: number;
-    timeExtra: number;
-    displayNumber: number;
-    warnMsg: number;
-    varIndex: number;
-    varNum: number;
-    targetId: number;
-    showWarning: number;
-    faded: number;
-    hasFixed: number;
-    permanent: number;
-    resetAnim: number;
+    time: Value;
+    timeBetween: Value;
+    timeExtra: Value;
+    displayNumber: Value;
+    warnMsg: Value;
+    varIndex: Value;
+    varNum: Value;
+    targetId: Value;
+    showWarning: Value;
+    faded: Value;
+    hasFixed: Value;
+    permanent: Value;
+    resetAnim: Value;
 
-    warningDelay: number;
-    spawnDelay: number;
-    spawnDelay2: number;
-    spawnDelayTotal: number;
-    eraseDelay: number;
-    warningDelay2: number;
-    laserSpawnDelay: number;
-    laserEraseDelay: number;
+    warningDelay: Value;
+    spawnDelay: Value;
+    spawnDelay2: Value;
+    spawnDelayTotal: Value;
+    eraseDelay: Value;
+    warningDelay2: Value;
+    laserSpawnDelay: Value;
+    laserEraseDelay: Value;
 
-    type: number;
-    element: Element;
-    startAngle: number;
-    fanAngle: number;
-    lineAngle: number;
-    lineDir: number;
-    bulletDir: number;
-    angleInc: number;
-    numLines: number;
-    lineLength: number;
-    numCones: number;
-    numPoints: number;
-    scale: number;
-    scaleInc: number;
-    scaleEnd: number;
-    ringNum: number;
-    horizontal: number;
+    type: Value;
+    element: Element | Variable;
+    startAngle: Value;
+    fanAngle: Value;
+    lineAngle: Value;
+    lineDir: Value;
+    bulletDir: Value;
+    angleInc: Value;
+    numLines: Value;
+    lineLength: Value;
+    numCones: Value;
+    numPoints: Value;
+    scale: Value;
+    scaleInc: Value;
+    scaleEnd: Value;
+    ringNum: Value;
+    horizontal: Value;
 
-    kbAmount: number;
-    lifespan: number;
-    spawnHealth: number;
+    kbAmount: Value;
+    lifespan: Value;
+    spawnHealth: Value;
     
-    hbsIndex: number;
-    hbsDuration: number;
-    hbsStrength: number;
-    hbsHitDelay: number;
+    hbsIndex: Value;
+    hbsDuration: Value;
+    hbsStrength: Value;
+    hbsHitDelay: Value;
     
-    num: number;
-    width: number;
-    widthInc: number;
-    length: number;
-    height: number;
-    spacing: number;
-    offset: number;
-    spdMin: number;
-    spdMax: number;
-    shouldMove: number;
+    num: Value;
+    width: Value;
+    widthInc: Value;
+    length: Value;
+    height: Value;
+    spacing: Value;
+    offset: Value;
+    spdMin: Value;
+    spdMax: Value;
+    shouldMove: Value;
     
-    exTrgId: number;
-    trgBinary: number;
-    trgBinary2: number;
+    exTrgId: Value;
+    trgBinary: Value;
+    trgBinary2: Value;
     
-    dialogInd0: number;
-    dialogInd1: number;
-    dialogInd2: number;
+    dialogInd0: Value;
+    dialogInd1: Value;
+    dialogInd2: Value;
     
-    offX: number | number[];
-    offY: number | number[];
+    offX: Value | Value[];
+    offY: Value | Value[];
 
     // 0-6 (5 is max)
-    playerId: number[];
-    t_xpos: number[];
-    t_ypos: number[];
-    // offX: number[]; (included earlier)
-    // offY: number[]; (included earlier)
+    playerId: Value[];
+    t_xpos: Value[];
+    t_ypos: Value[];
+    // offX: Value[]; (included earlier)
+    // offY: Value[]; (included earlier)
 
     // 0-20
-    // spd: number[]; (included earlier)
-    // rot: number[]; (included earlier)
-    posX: number[];
-    posY: number[];
+    // spd: Value[]; (included earlier)
+    // rot: Value[]; (included earlier)
+    posX: Value[];
+    posY: Value[];
 
     // 0-4?
-    orderBin: number[];
+    orderBin: Value[];
 };
 
 type PatternVars = Partial<_PatternVars>;
 
-export type { PatternVars };
+export type { PatternVars, Value };
 export { POS_MIN, POS_MAX };
