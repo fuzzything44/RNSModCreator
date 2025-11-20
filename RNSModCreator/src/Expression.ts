@@ -66,15 +66,15 @@ export const diffSwitch = (normal: Value, hard: Value, lunar: Value) => new Expr
 export const circleRadiusDef = (multiplier: Value) => new Expression(`circleRadiusDef(${multiplier})`, true);
 export const coneRadiusDef = (multiplier: Value) => new Expression(`coneRadiusDef(${multiplier})`, true);
 export const randomRange = (min: Value, max: Value) => new Expression(`randomRange(${min}>${max})`, true);
-export const random = (max: Value) => new Expression(`random($${max})`, true);
+export const random = (max: Value) => new Expression(`random(${max})`, true);
 export const intRandom = (max: Value) => new Expression(`irandom(${max})`, true);
-export const randomTargetId = (orderBinary: Value) => new Expression(`randomTargetId($${orderBinary})`, true);
-export const playerXPos = (playerId: Value) => new Expression(`playerXPos($${playerId})`, true);
-export const playerYPos = (playerId: Value) => new Expression(`playerYPos($${playerId})`, true);
+export const randomTargetId = (orderBinary: Value) => new Expression(`randomTargetId(${orderBinary})`, true);
+export const playerXPos = (playerId: Value) => new Expression(`playerXPos(${playerId})`, true);
+export const playerYPos = (playerId: Value) => new Expression(`playerYPos(${playerId})`, true);
 export const pointFrom = (x0: Value, y0: Value, x1: Value, y1: Value) => new Expression(`pointFrom(${x0}>${y0}>${x1}>${y1})`, true);
 export const angleFrom = pointFrom;
 export const pointDist = (x0: Value, y0: Value, x1: Value, y1: Value) => new Expression(`pointDist(${x0}>${y0}>${x1}>${y1})`, true);
-export const randomTargetBinary = (playerNum: Value) => new Expression(`randomTargetBinary($${playerNum})`, true);
+export const randomTargetBinary = (playerNum: Value) => new Expression(`randomTargetBinary(${playerNum})`, true);
 export const hbs = (key: string) => new Expression(`hbs(${key})`, true);
 
 

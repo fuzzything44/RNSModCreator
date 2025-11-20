@@ -66,7 +66,7 @@ export const animation = (animIndex: Value, chargeTime: Value, duration: Value, 
 export const transform = (animKey: Value, radius: Value, drawScale: Value, focusScale: Value, frameRate: Value, small: boolean = false) => new Command(small ? "transformSmall" : "transform", [animKey, radius, drawScale, focusScale, frameRate]);
 
 // Probably a better way to handle this (but need text system)
-export const dialog = (key0: string, key1?: string, key2?: string) => new Command("dialog", [key0, key1, key2].filter(k => k !== undefined).map(k => new Expression(k)));
+export const dialog = (timeToRun: Value, key0: string, key1?: string, key2?: string) => new Command("dialog", [timeToRun, key0, key1, key2].filter(k => k !== undefined).map(k => new Expression(k)));
 
 export const orderBinRandom = (...groups: Value[]) => new Command("orderBinRandom", groups);
 export const orderBinRandomNoKO = (...groups: Value[]) => new Command("orderBinRandomNoKO", groups);
@@ -78,3 +78,4 @@ export const orderBinSet = (index: 0 | 1 | 2 | 3, amount: Value) => new Command(
 // Add a dummy context function to make sure when blocks are split this command is included
 export const syncRandomSeed = () => new Command("syncRandomSeed", [], () => { });
 
+export const endPattern = () => new Command("endPattern", []);

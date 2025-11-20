@@ -5,7 +5,7 @@ import type { Variable } from "./Variable.js";
 const POS_MIN = -10000;
 const POS_MAX = 10000;
 
-type Value = number | Variable | Expression;
+type Value = number | boolean | Variable | Expression;
 
 interface _PatternVars {
     x: Value;

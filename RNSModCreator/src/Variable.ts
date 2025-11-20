@@ -24,6 +24,19 @@ class Variable {
         return this.varName;
     }
 
+    /** Set a variable to a value again, in case you want to reuse a variable across multiple different blocks.
+     *  For example, if you wanted to set it differently based off number of players you'd create an initial var
+     *  And then set it in each player count block with this function.
+     * 
+     * @param setTo What to set the variable to
+     */
+    set(setTo: Value) {
+        if (_CONTEXT.timeBlock === null) {
+            throw new Error("Variable setting used outside of time block");
+        }
+        _CONTEXT.timeBlock?.addContent(`setVar,${this.varName},${setTo}`);
+    }
+
     add(toAdd: Value) {
         return new Expression(this.varName + "+" + toAdd.toString());
     }
