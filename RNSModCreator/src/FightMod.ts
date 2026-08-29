@@ -1,8 +1,10 @@
+import { dirname } from "path/win32";
 import type Encounter from "./Encounter.js";
 import type Enemy from "./Enemy.js";
 import type { FileDef } from "./FileDef.js";
 import _CONTEXT from "./InternalContext.js";
 import type Pattern from "./Pattern.js";
+import * as fs from 'fs';
 
 const generate = (enemies: string[]) => {
     const header = "Sheet Type,filename";
@@ -12,12 +14,15 @@ const generate = (enemies: string[]) => {
         enemySheets;
 };
 
+const FILE_REGEX = /(\.\.)|[/\\]/g;
 class FightMod {
     private enemies: Enemy[];
     private encounters: Encounter[];
     private patterns: Pattern[];
+    private modName: string;
 
-    constructor(callback: () => void) {
+    constructor(modName: string, callback: () => void) {
+        this.modName = modName.replaceAll(FILE_REGEX, "_");
         this.enemies = [];
         this.encounters = [];
         this.patterns = [];
@@ -64,12 +69,19 @@ class FightMod {
                 encounterSheets + "\n" +
                 patternSheets
         };
-        return [
+        const files = [
             thisFile,
             ...this.enemies.flatMap(enemy => enemy.generate()),
             ...this.encounters.flatMap(enc => enc.generate()),
             ...this.patterns.flatMap(pat => pat.generate())
         ];
+        const dirName = "build/" + this.modName
+        fs.rmSync(dirName, { recursive: true, force: true });
+        fs.mkdirSync(dirName, { recursive: true });
+        files.forEach((file: FileDef) => {
+            var outFile = fs.writeFileSync(dirName + "/" + file.fileName.replaceAll(FILE_REGEX, "_"), file.content);
+        })
+        return files;
     };
 }
 

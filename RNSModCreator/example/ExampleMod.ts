@@ -11,7 +11,7 @@ import { dreadWyrmSingle_2, dreadWyrmSingle_3, dreadWyrmSingle_4, dreadWyrmSingl
 import { dreadWyrmMulti_2, dreadWyrmMulti_3, dreadWyrmMulti_4, dreadWyrmMulti_5, dreadWyrmMulti_6, dreadWyrmMulti_7 } from "./DreadwyrmMultiPatterns.js";
 import { bp } from "../src/BasePattern.js";
 
-const mod = new FightMod(() => {
+const mod = new FightMod("example dreadwyrm", () => {
     const testEnemy = new Enemy({
         key: "en_dreadwyrm_heir",
         animationKey: "anim_dreadwyrm_heir",
@@ -134,10 +134,8 @@ const mod = new FightMod(() => {
     }, 400, 0, 12000);
 });
 
-const outputs = mod.generate();
-outputs.forEach(file => {
-    console.log(`<${file.fileName}>\n${file.content}\n\n`);
-});
+mod.generate();
 
+console.log("Generation complete!");
 while (true);
 export default mod;
